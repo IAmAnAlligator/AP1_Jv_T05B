@@ -1,4 +1,4 @@
-docker-compose.yml
+.env
 /src/main/resources/application-context.properties
 /src/main/resources/application.properties
 HELP.md
