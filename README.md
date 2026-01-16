@@ -42,6 +42,7 @@
 - Gradle (Kotlin DSL)
 - JUnit 5
 - MockMvc
+- **Frontend:** HTML, CSS, JavaScript
 
 
 ## Запуск
@@ -51,6 +52,12 @@
    git clone https://github.com/IAmAnAlligator/AP1_Jv_T05B.git
    cd AP1_Jv_T05B
    ```
+2. **Настройка окружения**
+   - Если используется Docker для базы данных:
+   ```bash 
+   docker-compose up -d
+   ```
+   - Настройте .env для секретов (JWT, DB), если нужно.
 
 3. **Запуск приложения**
    ```bash
@@ -67,10 +74,22 @@
    ./gradlew test
    ```
 
+## Фронтенд
+- Базовый UI на HTML/CSS/JS встроен в Spring Boot через src/main/resources/static.
+- Возможна интеграция с React/Vue для более сложного интерфейса.
+- Страницы включают: экран авторизации/регистрации, экран инициализации игры, игровое поле.
+
+## Скриншоты
+
+![register](docs/screenshots/index.png)
+
+![game field](docs/screenshots/game-view.png)
+
+
 ## Возможные улучшения
 
-- Добавление UI (HTML/JS, React, Vue).
-  
+- Расширение UI с помощью React или Vue.
+
 - Swagger/OpenAPI документация.
   
 - CI/CD (GitHub Actions).
