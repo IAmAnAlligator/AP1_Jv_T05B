@@ -52,7 +52,7 @@ public class ComputerMoveCalculator {
           board[y][x] = EMPTY_CELL;
 
           // немного случайности — чтобы не всегда играл одинаково
-          val += (int) (Math.random() * 5) - 1;
+          val += (int) (Math.random() * 8) - 2;
 
           if (isMaximizing) best = Math.max(best, val);
           else best = Math.min(best, val);

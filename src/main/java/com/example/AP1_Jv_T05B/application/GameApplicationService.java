@@ -18,6 +18,7 @@ import com.example.AP1_Jv_T05B.web.dto.LeaderboardUserResponse;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,7 +119,14 @@ public class GameApplicationService {
             GameStatus.IN_PROGRESS,
             GameStatus.PLAYER_X_TURN,
             GameStatus.PLAYER_O_TURN);
-    return repository.findAllByStatusIn(statuses).stream().map(GameMapper::toDomain).toList();
+    return repository
+        .findAllByStatusIn(
+            statuses,
+            Sort.by(Sort.Direction.DESC, "createdAt") // новые игры сверху
+        )
+        .stream()
+        .map(GameMapper::toDomain)
+        .toList();
   }
 
   @Transactional

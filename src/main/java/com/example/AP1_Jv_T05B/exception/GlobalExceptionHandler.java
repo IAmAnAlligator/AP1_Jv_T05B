@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -94,7 +95,13 @@ public class GlobalExceptionHandler {
 
   // На случай непредвиденных ошибок
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ErrorResponseDTO> handleGeneral(Exception ex) {
+  public ResponseEntity<ErrorResponseDTO> handleGeneral(Exception ex) throws Exception {
+
+    if (ex instanceof AccessDeniedException
+        || ex instanceof org.springframework.security.core.AuthenticationException) {
+      throw ex;
+    }
+
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         .body(
             new ErrorResponseDTO("Internal server error: " + ex.getMessage(), LocalDateTime.now()));

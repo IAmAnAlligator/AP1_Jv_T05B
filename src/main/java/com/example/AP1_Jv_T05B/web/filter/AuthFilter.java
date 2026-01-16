@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,16 +35,14 @@ public class AuthFilter extends OncePerRequestFilter {
     if (header != null && header.startsWith("Bearer ")) {
       String token = header.substring(7);
 
-      if (jwtProvider.validateAccessToken(token)) {
-        // Получаем claims из токена
-        var claims = jwtProvider.getAccessClaims(token);
-
-        // Создаём JwtAuthentication
-        JwtAuthentication auth = JwtUtil.fromClaims(claims);
-
-        // Устанавливаем в SecurityContext
-        SecurityContextHolder.getContext().setAuthentication(auth);
+      if (!jwtProvider.validateAccessToken(token)) {
+        SecurityContextHolder.clearContext();
+        throw new BadCredentialsException("Invalid or expired access token");
       }
+
+      var claims = jwtProvider.getAccessClaims(token);
+      JwtAuthentication auth = JwtUtil.fromClaims(claims);
+      SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
     filterChain.doFilter(request, response);

@@ -4,12 +4,15 @@ import com.example.AP1_Jv_T05B.datasource.entity.GameEntity;
 import com.example.AP1_Jv_T05B.domain.service.GameStatus;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface GameRepository extends CrudRepository<GameEntity, UUID> {
 
-  List<GameEntity> findAllByStatusIn(List<GameStatus> statuses);
+
+  List<GameEntity> findAllByStatusIn(List<GameStatus> statuses, Sort sort);
+
 
   @Query(
       """
@@ -18,6 +21,7 @@ public interface GameRepository extends CrudRepository<GameEntity, UUID> {
                 (g.status = 'DRAW' AND (g.playerXId = :userId OR g.playerOId = :userId))
                 OR (g.status = 'PLAYER_X_WON' AND g.playerXId = :userId)
                 OR (g.status = 'PLAYER_O_WON' AND g.playerOId = :userId)
+                ORDER BY g.createdAt DESC
           """)
   List<GameEntity> findFinishedGamesByUser(UUID userId);
 
