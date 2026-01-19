@@ -2,6 +2,7 @@ import org.gradle.kotlin.dsl.implementation
 
 plugins {
     java
+    jacoco
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.diffplug.spotless") version "6.25.0"
@@ -19,6 +20,10 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.8.11"
 }
 
 dependencies {
@@ -52,4 +57,34 @@ spotless {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
+    }
+
+    classDirectories.setFrom(
+        files(
+            classDirectories.files.map {
+                fileTree(it) {
+                    exclude(
+                        "**/datasource/**",
+                        "**/security/**",
+                        "**/di/**",
+                        "**/exception/**"
+                    )
+                }
+            }
+        )
+    )
 }

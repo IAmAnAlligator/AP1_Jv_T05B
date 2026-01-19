@@ -26,7 +26,8 @@ public class SpringConfiguration {
   private final JwtAuthenticationEntryPoint authenticationEntryPoint;
   private final JwtAccessDeniedHandler accessDeniedHandler;
 
-  public SpringConfiguration(AuthFilter authFilter,
+  public SpringConfiguration(
+      AuthFilter authFilter,
       JwtAuthenticationEntryPoint authenticationEntryPoint,
       JwtAccessDeniedHandler accessDeniedHandler) {
     this.authFilter = authFilter;
@@ -35,18 +36,18 @@ public class SpringConfiguration {
   }
 
   private static final String[] PUBLIC_ENDPOINTS = {
-      "/",
-      "/auth/login",
-      "/auth/register",
-      "/auth/token/refresh",
-      "/auth/token/refresh-access",
-      "/auth-client.js",
-      "/index.html",
-      "/index.js",
-      "/game.html",
-      "/game.js",
-      "/game-view.html",
-      "/game-view.js"
+    "/",
+    "/auth/login",
+    "/auth/register",
+    "/auth/token/refresh",
+    "/auth/token/refresh-access",
+    "/auth-client.js",
+    "/index.html",
+    "/index.js",
+    "/game.html",
+    "/game.js",
+    "/game-view.html",
+    "/game-view.js"
   };
 
   @Bean
@@ -61,10 +62,10 @@ public class SpringConfiguration {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         // 🔥 ВАЖНО: обработка 401
-        .exceptionHandling(ex -> ex
-            .authenticationEntryPoint(authenticationEntryPoint)
-            .accessDeniedHandler(accessDeniedHandler)
-        )
+        .exceptionHandling(
+            ex ->
+                ex.authenticationEntryPoint(authenticationEntryPoint)
+                    .accessDeniedHandler(accessDeniedHandler))
 
         // Настраиваем доступ к endpoint'ам
         .authorizeHttpRequests(

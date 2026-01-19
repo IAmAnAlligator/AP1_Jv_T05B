@@ -10,9 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface GameRepository extends CrudRepository<GameEntity, UUID> {
 
-
   List<GameEntity> findAllByStatusIn(List<GameStatus> statuses, Sort sort);
-
 
   @Query(
       """

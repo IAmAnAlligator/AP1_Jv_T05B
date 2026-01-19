@@ -10,7 +10,6 @@ import com.example.AP1_Jv_T05B.web.dto.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -57,5 +56,4 @@ public class AuthController {
     UserResponse response = authorizationService.getUserById(auth.getPrincipal());
     return ResponseEntity.ok(response);
   }
-
 }

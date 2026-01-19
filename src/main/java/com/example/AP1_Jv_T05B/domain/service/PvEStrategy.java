@@ -2,6 +2,7 @@ package com.example.AP1_Jv_T05B.domain.service;
 
 import static com.example.AP1_Jv_T05B.domain.util.GameConstants.COMPUTER_MARK;
 import static com.example.AP1_Jv_T05B.domain.util.GameConstants.EMPTY_CELL;
+import static com.example.AP1_Jv_T05B.domain.util.GameConstants.PLAYER_MARK;
 
 import com.example.AP1_Jv_T05B.domain.entity.Game;
 import java.awt.Point;
@@ -55,7 +56,7 @@ public class PvEStrategy implements TurnStrategy {
     }
 
     int changes = 0;
-    int currentPlayerValue = currentGame.isPlayerTurn() ? 1 : COMPUTER_MARK;
+    int currentPlayerValue = currentGame.isPlayerTurn() ? PLAYER_MARK : COMPUTER_MARK;
 
     for (int y = 0; y < original.length; y++) {
       for (int x = 0; x < original[y].length; x++) {

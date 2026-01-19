@@ -15,17 +15,21 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
   public void handle(
       HttpServletRequest request,
       HttpServletResponse response,
-      AccessDeniedException accessDeniedException
-  ) throws IOException {
+      AccessDeniedException accessDeniedException)
+      throws IOException {
 
     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     response.setContentType("application/json");
 
-    response.getWriter().write("""
+    response
+        .getWriter()
+        .write(
+            """
       {
         "message": "Forbidden. %s",
         "timestamp": "%s"
       }
-    """.formatted(accessDeniedException.getMessage(), LocalDateTime.now()));
+    """
+                .formatted(accessDeniedException.getMessage(), LocalDateTime.now()));
   }
 }

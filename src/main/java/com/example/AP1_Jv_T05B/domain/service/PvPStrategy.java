@@ -45,8 +45,6 @@ public class PvPStrategy implements TurnStrategy {
 
     // 4. Игра продолжается → меняем ход
     game.setPlayerTurn(!game.isPlayerTurn());
-    //    UUID nextPlayerId = game.isPlayerTurn() ? game.getPlayerXId() : game.getPlayerOId();
-    //    game.setCurrentPlayerId(nextPlayerId);
 
     // 5. Присваиваем статус соответствующего игрока
     if (game.isPlayerTurn()) {

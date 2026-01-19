@@ -121,9 +121,8 @@ public class GameApplicationService {
             GameStatus.PLAYER_O_TURN);
     return repository
         .findAllByStatusIn(
-            statuses,
-            Sort.by(Sort.Direction.DESC, "createdAt") // новые игры сверху
-        )
+            statuses, Sort.by(Sort.Direction.DESC, "createdAt") // новые игры сверху
+            )
         .stream()
         .map(GameMapper::toDomain)
         .toList();

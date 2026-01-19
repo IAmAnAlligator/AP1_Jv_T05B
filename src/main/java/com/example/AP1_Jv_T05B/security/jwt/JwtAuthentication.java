@@ -1,6 +1,7 @@
 package com.example.AP1_Jv_T05B.security.jwt;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,19 @@ public class JwtAuthentication implements Authentication {
     this.authorities = authorities;
     this.authenticated = authenticated;
   }
+
+  // Упрощённый конструктор (БЕЗ ролей) для тестов
+  public JwtAuthentication(UUID principal) {
+    this(principal, List.of(), true);
+  }
+
+  // Упрощённый конструктор (с ролями, но по умолчанию authenticated=true)
+  //  public JwtAuthentication(
+  //      UUID principal,
+  //      Collection<? extends GrantedAuthority> authorities
+  //  ) {
+  //    this(principal, authorities, true);
+  //  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

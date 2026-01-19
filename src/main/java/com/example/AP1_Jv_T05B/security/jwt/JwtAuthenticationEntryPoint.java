@@ -15,18 +15,21 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
   public void commence(
       HttpServletRequest request,
       HttpServletResponse response,
-      AuthenticationException authException
-  ) throws IOException {
+      AuthenticationException authException)
+      throws IOException {
 
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     response.setContentType("application/json");
 
-    response.getWriter().write("""
+    response
+        .getWriter()
+        .write(
+            """
       {
         "message": "Unauthorized. %s",
         "timestamp": "%s"
       }
-    """.formatted(authException.getMessage(),  LocalDateTime.now()));
+    """
+                .formatted(authException.getMessage(), LocalDateTime.now()));
   }
 }
-
